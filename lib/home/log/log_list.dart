@@ -1,5 +1,5 @@
 import 'package:aneukan/formatter.dart';
-import 'package:aneukan/log.dart';
+import 'package:aneukan/models/log.dart';
 import 'package:flutter/material.dart';
 
 class LogList extends StatelessWidget {

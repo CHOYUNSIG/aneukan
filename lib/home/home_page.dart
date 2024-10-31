@@ -1,10 +1,11 @@
-import 'package:aneukan/log.dart';
+import 'package:aneukan/models/log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_notifier.dart';
 import 'log/log_view.dart';
 import 'settings/settings_view.dart';
 import 'package:aneukan/previewer.dart';
+import 'package:aneukan/theme.dart';
 
 void main() {
   runApp(
@@ -40,21 +41,24 @@ class HomeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => HomeNotifier(),
-      child: Consumer<HomeNotifier>(
-        builder: (context, notifier, child) => HomePage(
-          logs: notifier.logs,
-          selectedDateRange: notifier.selectedDateRange,
-          userName: notifier.userName,
-          userEmail: notifier.userEmail,
-          isPushEnabled: notifier.isPushEnabled,
-          isMessageEnabled: notifier.isMessageEnabled,
-          isEmailNotificationEnabled: notifier.isEmailNotificationEnabled,
-          onEditProfileTapped: notifier.editProfile,
-          onPushNotificationChanged: notifier.setPushNotification,
-          onMessageNotificationChanged: notifier.setMessageNotification,
-          onEmailNotificationChanged: notifier.setEmailNotification,
-          onLogTapped: notifier.onLogTapped,
-          onDateRangeChanged: notifier.onDateRangeChanged,
+      child: MaterialApp(
+        theme: AneukanTheme.theme,
+        home: Consumer<HomeNotifier>(
+          builder: (context, notifier, child) => HomePage(
+            logs: notifier.logs,
+            selectedDateRange: notifier.selectedDateRange,
+            userName: notifier.userName,
+            userEmail: notifier.userEmail,
+            isPushEnabled: notifier.isPushEnabled,
+            isMessageEnabled: notifier.isMessageEnabled,
+            isEmailNotificationEnabled: notifier.isEmailNotificationEnabled,
+            onEditProfileTapped: notifier.editProfile,
+            onPushNotificationChanged: notifier.setPushNotification,
+            onMessageNotificationChanged: notifier.setMessageNotification,
+            onEmailNotificationChanged: notifier.setEmailNotification,
+            onLogTapped: notifier.onLogTapped,
+            onDateRangeChanged: notifier.onDateRangeChanged,
+          ),
         ),
       ),
     );
@@ -159,19 +163,30 @@ class _HomePageState extends State<HomePage> {
         title: const Text('홈'),
       ),
       body: _page,
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.history),
-            label: '기록',
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Divider(
+            height: 1,
+            indent: 32,
+            endIndent: 32,
+            color: Colors.black26,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: '설정',
+          BottomNavigationBar(
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.history),
+                label: '기록',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.settings),
+                label: '설정',
+              ),
+            ],
+            currentIndex: _selectedIndex,
+            onTap: _onNavBarItemClicked,
           ),
         ],
-        currentIndex: _selectedIndex,
-        onTap: _onNavBarItemClicked,
       ),
     );
   }

@@ -1,9 +1,9 @@
 import 'package:aneukan/home/log/log_list.dart';
 import 'package:aneukan/home/log/date_selector.dart';
 import 'package:aneukan/home/log/cam_selector.dart';
-import 'package:aneukan/log.dart';
+import 'package:aneukan/models/log.dart';
 import 'package:flutter/material.dart';
-import 'package:aneukan/homecam.dart';
+import 'package:aneukan/models/homecam.dart';
 import 'package:aneukan/previewer.dart';
 
 void main() {

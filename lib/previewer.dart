@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:aneukan/theme.dart';
 
 class Previewer extends StatelessWidget {
   final Widget page;
@@ -13,6 +14,7 @@ class Previewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: AneukanTheme.theme,
       home: isView ? Scaffold(body: page) : page,
     );
   }
