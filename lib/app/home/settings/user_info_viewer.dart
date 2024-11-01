@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:aneukan/models/user.dart';
 
 class UserInfoViewer extends StatelessWidget {
-  final String userName;
-  final String userEmail;
-  final String userPhone;
-
+  final User user;
   final void Function() onEditProfileTapped;
 
   const UserInfoViewer({
     super.key,
-    required this.userName,
-    required this.userEmail,
-    required this.userPhone,
+    required this.user,
     required this.onEditProfileTapped,
   });
 
@@ -22,8 +18,8 @@ class UserInfoViewer extends StatelessWidget {
         leading: const CircleAvatar(
           child: Icon(Icons.person),
         ),
-        title: Text(userName),
-        subtitle: Text('$userEmail\n$userPhone'),
+        title: Text(user.name),
+        subtitle: Text('${user.email}\n${user.phone}'),
         trailing: IconButton(
           icon: const Icon(Icons.edit),
           onPressed: onEditProfileTapped,

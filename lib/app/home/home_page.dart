@@ -1,5 +1,6 @@
 import 'package:aneukan/models/homecam.dart';
 import 'package:aneukan/models/log.dart';
+import 'package:aneukan/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_notifier.dart';
@@ -7,55 +8,6 @@ import 'log/log_view.dart';
 import 'settings/settings_view.dart';
 import 'package:aneukan/previewer.dart';
 import 'package:aneukan/theme.dart';
-
-void main() {
-  runApp(
-    Previewer(
-      isView: false,
-      page: HomePage(
-        logs: [
-          Log(id: 1, timestamp: DateTime.parse('2024-01-01T16:03:20')),
-          Log(id: 2, timestamp: DateTime.parse('2024-03-02T21:16:05')),
-          Log(id: 3, timestamp: DateTime.parse('2024-06-13T08:42:15')),
-        ],
-        selectedDateRange: null,
-        userName: '홍길동',
-        userEmail: 'hong@example.com',
-        userPhone: '010-1234-5678',
-        selectedCam: const Homecam(
-          id: 1,
-          name: '홈캠 1',
-          telephone: '010-1234-5678',
-          address: '서울시 강남구',
-        ),
-        homecams: const [
-          Homecam(
-              id: 1,
-              name: '홈캠 1',
-              telephone: '010-1234-5678',
-              address: '서울시 강남구'),
-          Homecam(
-              id: 2,
-              name: '홈캠 2',
-              telephone: '010-1234-5678',
-              address: '서울시 강남구'),
-        ],
-        isPushNotificationEnabled: true,
-        isMessageNotificationEnabled: false,
-        isEmailNotificationEnabled: true,
-        onEditProfileTapped: () {},
-        onPushNotificationChanged: (value) {},
-        onMessageNotificationChanged: (value) {},
-        onEmailNotificationChanged: (value) {},
-        onLogTapped: (log) {},
-        onDateRangeChanged: (dateRange) {},
-        onHomecamTapped: (homecam) {},
-        onDeleteHomecamTapped: (homecam) {},
-        onAddHomecamTapped: () {},
-      ),
-    ),
-  );
-}
 
 class HomeApp extends StatelessWidget {
   const HomeApp({super.key});
@@ -70,9 +22,7 @@ class HomeApp extends StatelessWidget {
           builder: (context, notifier, child) => HomePage(
             logs: notifier.logs,
             selectedDateRange: notifier.selectedDateRange,
-            userName: notifier.userName,
-            userEmail: notifier.userEmail,
-            userPhone: notifier.userPhone,
+            user: notifier.user,
             selectedCam: notifier.selectedCam,
             homecams: notifier.homecams,
             isPushNotificationEnabled: notifier.isPushNotificationEnabled,
@@ -87,6 +37,7 @@ class HomeApp extends StatelessWidget {
             onHomecamTapped: notifier.onHomecamTapped,
             onDeleteHomecamTapped: notifier.onDeleteHomecamTapped,
             onAddHomecamTapped: notifier.onAddHomecamTapped,
+            onCamBarClicked: notifier.onCamBarClicked,
           ),
         ),
       ),
@@ -97,38 +48,33 @@ class HomeApp extends StatelessWidget {
 class HomePage extends StatefulWidget {
   final List<Log> logs;
   final DateTimeRange? selectedDateRange;
-
-  final String userName;
-  final String userEmail;
-  final String userPhone;
-
+  final User? user;
   final Homecam? selectedCam;
   final List<Homecam> homecams;
-
   final bool isPushNotificationEnabled;
   final bool isMessageNotificationEnabled;
   final bool isEmailNotificationEnabled;
-
-  final void Function(Log) onLogTapped;
-  final void Function(DateTimeRange?) onDateRangeChanged;
 
   final void Function() onEditProfileTapped;
   final void Function(bool) onPushNotificationChanged;
   final void Function(bool) onMessageNotificationChanged;
   final void Function(bool) onEmailNotificationChanged;
-
   final void Function(Homecam) onHomecamTapped;
   final void Function(Homecam) onDeleteHomecamTapped;
   final void Function() onAddHomecamTapped;
+  final void Function(Homecam) onCamBarClicked;
+  final void Function(Log) onLogTapped;
+  final void Function(DateTimeRange?) onDateRangeChanged;
 
   const HomePage({
     super.key,
     required this.logs,
-    required this.selectedDateRange,
-    required this.userName,
-    required this.userEmail,
-    required this.userPhone,
     required this.selectedCam,
+    required this.selectedDateRange,
+    required this.onCamBarClicked,
+    required this.onLogTapped,
+    required this.onDateRangeChanged,
+    required this.user,
     required this.homecams,
     required this.isPushNotificationEnabled,
     required this.isMessageNotificationEnabled,
@@ -137,8 +83,6 @@ class HomePage extends StatefulWidget {
     required this.onPushNotificationChanged,
     required this.onMessageNotificationChanged,
     required this.onEmailNotificationChanged,
-    required this.onLogTapped,
-    required this.onDateRangeChanged,
     required this.onHomecamTapped,
     required this.onDeleteHomecamTapped,
     required this.onAddHomecamTapped,
@@ -168,9 +112,7 @@ class _HomePageState extends State<HomePage> {
   void _navigateToSettingsView() {
     setState(() {
       _page = SettingsView(
-        userName: widget.userName,
-        userEmail: widget.userEmail,
-        userPhone: widget.userPhone,
+        user: widget.user,
         homecams: widget.homecams,
         isPushNotificationEnabled: widget.isPushNotificationEnabled,
         isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
@@ -238,4 +180,56 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+}
+
+void main() {
+  runApp(
+    Previewer(
+      isView: false,
+      page: HomePage(
+        logs: [
+          Log(id: 1, timestamp: DateTime.parse('2024-01-01T16:03:20')),
+          Log(id: 2, timestamp: DateTime.parse('2024-03-02T21:16:05')),
+          Log(id: 3, timestamp: DateTime.parse('2024-06-13T08:42:15')),
+        ],
+        selectedDateRange: null,
+        user: const User(
+          name: '홍길동',
+          email: 'hong@example.com',
+          phone: '010-1234-5678',
+        ),
+        selectedCam: const Homecam(
+          id: 1,
+          name: '홈캠 1',
+          telephone: '010-1234-5678',
+          address: '서울시 강남구',
+        ),
+        homecams: const [
+          Homecam(
+              id: 1,
+              name: '홈캠 1',
+              telephone: '010-1234-5678',
+              address: '서울시 강남구'),
+          Homecam(
+              id: 2,
+              name: '홈캠 2',
+              telephone: '010-1234-5678',
+              address: '서울시 강남구'),
+        ],
+        isPushNotificationEnabled: true,
+        isMessageNotificationEnabled: false,
+        isEmailNotificationEnabled: true,
+        onEditProfileTapped: () {},
+        onPushNotificationChanged: (value) {},
+        onMessageNotificationChanged: (value) {},
+        onEmailNotificationChanged: (value) {},
+        onLogTapped: (log) {},
+        onDateRangeChanged: (dateRange) {},
+        onHomecamTapped: (homecam) {},
+        onDeleteHomecamTapped: (homecam) {},
+        onAddHomecamTapped: () {},
+        onCamBarClicked: (homecam) {},
+      ),
+    ),
+  );
 }

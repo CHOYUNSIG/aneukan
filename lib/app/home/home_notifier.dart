@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:aneukan/models/log.dart';
 import 'package:aneukan/models/homecam.dart';
+import 'package:aneukan/models/user.dart';
 
 class HomeNotifier extends ChangeNotifier {
   List<Log> logs = [];
   DateTimeRange? selectedDateRange;
 
-  String userName = '';
-  String userEmail = '';
-  String userPhone = '';
+  User? user;
 
   Homecam? selectedCam;
 
@@ -60,6 +59,11 @@ class HomeNotifier extends ChangeNotifier {
 
   void onAddHomecamTapped() {
     // TODO: 홈캠 추가 로직 구현
+    notifyListeners();
+  }
+
+  void onCamBarClicked(Homecam homecam) {
+    selectedCam = homecam;
     notifyListeners();
   }
 

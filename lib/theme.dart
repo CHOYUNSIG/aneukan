@@ -11,6 +11,12 @@ class AneukanTheme {
         appBarTheme: AppBarTheme(
           elevation: 5,
           shadowColor: Colors.black.withOpacity(0.5),
+          backgroundColor: brandColor,
+          titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
           surfaceTintColor: Colors.white,
         ),
         bottomNavigationBarTheme: BottomNavigationBarThemeData(
