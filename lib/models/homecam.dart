@@ -1,16 +1,14 @@
 class Homecam {
+  final int id;
   final String name;
-  final String? gender;
-  final int? age;
-  final String? phone;
+  final String? telephone;
   final String? address;
   final String? email;
 
   const Homecam({
+    required this.id,
     required this.name,
-    this.gender,
-    this.age,
-    this.phone,
+    this.telephone,
     this.address,
     this.email,
   });

@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:aneukan/previewer.dart';
@@ -56,7 +54,9 @@ class LoginPage extends StatelessWidget {
           children: [
             Container(
               color: brandColor,
-              height: max(MediaQuery.of(context).size.height * 0.4, 360),
+              height: (MediaQuery.of(context).size.height -
+                      MediaQuery.of(context).viewInsets.bottom) *
+                  0.4,
               alignment: Alignment.centerLeft,
               child: const Padding(
                 padding: EdgeInsets.all(16),

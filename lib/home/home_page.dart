@@ -1,3 +1,4 @@
+import 'package:aneukan/models/homecam.dart';
 import 'package:aneukan/models/log.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,8 +21,27 @@ void main() {
         selectedDateRange: null,
         userName: '홍길동',
         userEmail: 'hong@example.com',
-        isPushEnabled: true,
-        isMessageEnabled: false,
+        userPhone: '010-1234-5678',
+        selectedCam: const Homecam(
+          id: 1,
+          name: '홈캠 1',
+          telephone: '010-1234-5678',
+          address: '서울시 강남구',
+        ),
+        homecams: const [
+          Homecam(
+              id: 1,
+              name: '홈캠 1',
+              telephone: '010-1234-5678',
+              address: '서울시 강남구'),
+          Homecam(
+              id: 2,
+              name: '홈캠 2',
+              telephone: '010-1234-5678',
+              address: '서울시 강남구'),
+        ],
+        isPushNotificationEnabled: true,
+        isMessageNotificationEnabled: false,
         isEmailNotificationEnabled: true,
         onEditProfileTapped: () {},
         onPushNotificationChanged: (value) {},
@@ -29,6 +49,9 @@ void main() {
         onEmailNotificationChanged: (value) {},
         onLogTapped: (log) {},
         onDateRangeChanged: (dateRange) {},
+        onHomecamTapped: (homecam) {},
+        onDeleteHomecamTapped: (homecam) {},
+        onAddHomecamTapped: () {},
       ),
     ),
   );
@@ -49,8 +72,11 @@ class HomeApp extends StatelessWidget {
             selectedDateRange: notifier.selectedDateRange,
             userName: notifier.userName,
             userEmail: notifier.userEmail,
-            isPushEnabled: notifier.isPushEnabled,
-            isMessageEnabled: notifier.isMessageEnabled,
+            userPhone: notifier.userPhone,
+            selectedCam: notifier.selectedCam,
+            homecams: notifier.homecams,
+            isPushNotificationEnabled: notifier.isPushNotificationEnabled,
+            isMessageNotificationEnabled: notifier.isMessageNotificationEnabled,
             isEmailNotificationEnabled: notifier.isEmailNotificationEnabled,
             onEditProfileTapped: notifier.editProfile,
             onPushNotificationChanged: notifier.setPushNotification,
@@ -58,6 +84,9 @@ class HomeApp extends StatelessWidget {
             onEmailNotificationChanged: notifier.setEmailNotification,
             onLogTapped: notifier.onLogTapped,
             onDateRangeChanged: notifier.onDateRangeChanged,
+            onHomecamTapped: notifier.onHomecamTapped,
+            onDeleteHomecamTapped: notifier.onDeleteHomecamTapped,
+            onAddHomecamTapped: notifier.onAddHomecamTapped,
           ),
         ),
       ),
@@ -71,9 +100,13 @@ class HomePage extends StatefulWidget {
 
   final String userName;
   final String userEmail;
+  final String userPhone;
 
-  final bool isPushEnabled;
-  final bool isMessageEnabled;
+  final Homecam? selectedCam;
+  final List<Homecam> homecams;
+
+  final bool isPushNotificationEnabled;
+  final bool isMessageNotificationEnabled;
   final bool isEmailNotificationEnabled;
 
   final void Function(Log) onLogTapped;
@@ -84,14 +117,21 @@ class HomePage extends StatefulWidget {
   final void Function(bool) onMessageNotificationChanged;
   final void Function(bool) onEmailNotificationChanged;
 
+  final void Function(Homecam) onHomecamTapped;
+  final void Function(Homecam) onDeleteHomecamTapped;
+  final void Function() onAddHomecamTapped;
+
   const HomePage({
     super.key,
     required this.logs,
     required this.selectedDateRange,
     required this.userName,
     required this.userEmail,
-    required this.isPushEnabled,
-    required this.isMessageEnabled,
+    required this.userPhone,
+    required this.selectedCam,
+    required this.homecams,
+    required this.isPushNotificationEnabled,
+    required this.isMessageNotificationEnabled,
     required this.isEmailNotificationEnabled,
     required this.onEditProfileTapped,
     required this.onPushNotificationChanged,
@@ -99,6 +139,9 @@ class HomePage extends StatefulWidget {
     required this.onEmailNotificationChanged,
     required this.onLogTapped,
     required this.onDateRangeChanged,
+    required this.onHomecamTapped,
+    required this.onDeleteHomecamTapped,
+    required this.onAddHomecamTapped,
   });
 
   @override
@@ -113,7 +156,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       _page = LogView(
         logs: widget.logs,
-        selectedCam: null,
+        selectedCam: widget.selectedCam,
         selectedDateRange: widget.selectedDateRange,
         onLogTapped: widget.onLogTapped,
         onDateRangeChanged: widget.onDateRangeChanged,
@@ -127,13 +170,18 @@ class _HomePageState extends State<HomePage> {
       _page = SettingsView(
         userName: widget.userName,
         userEmail: widget.userEmail,
-        isPushEnabled: widget.isPushEnabled,
-        isMessageEnabled: widget.isMessageEnabled,
+        userPhone: widget.userPhone,
+        homecams: widget.homecams,
+        isPushNotificationEnabled: widget.isPushNotificationEnabled,
+        isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
         isEmailNotificationEnabled: widget.isEmailNotificationEnabled,
         onEditProfileTapped: widget.onEditProfileTapped,
         onPushNotificationChanged: widget.onPushNotificationChanged,
         onMessageNotificationChanged: widget.onMessageNotificationChanged,
         onEmailNotificationChanged: widget.onEmailNotificationChanged,
+        onHomecamTapped: widget.onHomecamTapped,
+        onDeleteHomecamTapped: widget.onDeleteHomecamTapped,
+        onAddHomecamTapped: widget.onAddHomecamTapped,
       );
     });
   }

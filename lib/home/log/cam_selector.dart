@@ -22,15 +22,9 @@ class CamSelector extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(selectedCam!.name),
-                  if (selectedCam!.gender != null ||
-                      selectedCam!.age != null ||
-                      selectedCam!.phone != null)
+                  if (selectedCam!.telephone != null)
                     Text(
-                      [
-                        if (selectedCam!.gender != null) selectedCam!.gender!,
-                        if (selectedCam!.age != null) '${selectedCam!.age}세',
-                        if (selectedCam!.phone != null) selectedCam!.phone!,
-                      ].join(' · '),
+                      selectedCam!.telephone!,
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.grey,
