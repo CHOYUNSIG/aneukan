@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aneukan/models/user.dart';
+import 'package:aneukan/data/models/user.dart';
 
 class UserInfoViewer extends StatelessWidget {
   final User user;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:aneukan/models/homecam.dart';
+import 'package:aneukan/data/models/homecam.dart';
 import 'package:aneukan/app/home/settings/user_info_viewer.dart';
 import 'package:aneukan/app/home/settings/notification_switch.dart';
 import 'package:aneukan/app/home/settings/homecam_list.dart';
-import 'package:aneukan/models/user.dart';
+import 'package:aneukan/data/models/user.dart';
 import 'package:aneukan/previewer.dart';
 
 class SettingsView extends StatefulWidget {
@@ -80,25 +80,8 @@ void main() {
   runApp(
     Previewer(
       page: SettingsView(
-        user: const User(
-          name: '홍길동',
-          email: 'hong@example.com',
-          phone: '010-1234-5678',
-        ),
-        homecams: const [
-          Homecam(
-            id: 1,
-            name: '홈캠 1',
-            telephone: '010-1234-5678',
-            address: '서울시 강남구',
-          ),
-          Homecam(
-            id: 2,
-            name: '홈캠 2',
-            telephone: '010-1234-5678',
-            address: '서울시 강남구',
-          ),
-        ],
+        user: user1,
+        homecams: const [homecam1, homecam2],
         isPushNotificationEnabled: true,
         isMessageNotificationEnabled: false,
         isEmailNotificationEnabled: true,

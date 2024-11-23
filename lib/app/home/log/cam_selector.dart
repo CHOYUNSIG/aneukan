@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aneukan/models/homecam.dart';
+import 'package:aneukan/data/models/homecam.dart';
 
 class CamSelector extends StatelessWidget {
   final Homecam? selectedCam;

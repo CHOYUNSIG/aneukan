@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:aneukan/models/log.dart';
-import 'package:aneukan/models/homecam.dart';
-import 'package:aneukan/models/user.dart';
+import 'package:aneukan/data/models/log.dart';
+import 'package:aneukan/data/models/homecam.dart';
+import 'package:aneukan/data/models/user.dart';
 
 class HomeNotifier extends ChangeNotifier {
   List<Log> logs = [];

@@ -1,6 +1,6 @@
-import 'package:aneukan/models/homecam.dart';
-import 'package:aneukan/models/log.dart';
-import 'package:aneukan/models/user.dart';
+import 'package:aneukan/data/models/homecam.dart';
+import 'package:aneukan/data/models/log.dart';
+import 'package:aneukan/data/models/user.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_notifier.dart';
@@ -187,35 +187,11 @@ void main() {
     Previewer(
       isView: false,
       page: HomePage(
-        logs: [
-          Log(id: 1, timestamp: DateTime.parse('2024-01-01T16:03:20')),
-          Log(id: 2, timestamp: DateTime.parse('2024-03-02T21:16:05')),
-          Log(id: 3, timestamp: DateTime.parse('2024-06-13T08:42:15')),
-        ],
+        logs: [log1, log2, log3],
         selectedDateRange: null,
-        user: const User(
-          name: '홍길동',
-          email: 'hong@example.com',
-          phone: '010-1234-5678',
-        ),
-        selectedCam: const Homecam(
-          id: 1,
-          name: '홈캠 1',
-          telephone: '010-1234-5678',
-          address: '서울시 강남구',
-        ),
-        homecams: const [
-          Homecam(
-              id: 1,
-              name: '홈캠 1',
-              telephone: '010-1234-5678',
-              address: '서울시 강남구'),
-          Homecam(
-              id: 2,
-              name: '홈캠 2',
-              telephone: '010-1234-5678',
-              address: '서울시 강남구'),
-        ],
+        user: user1,
+        selectedCam: homecam1,
+        homecams: const [homecam1, homecam2],
         isPushNotificationEnabled: true,
         isMessageNotificationEnabled: false,
         isEmailNotificationEnabled: true,

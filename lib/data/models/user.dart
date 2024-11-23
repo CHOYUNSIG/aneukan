@@ -9,3 +9,6 @@ class User {
     required this.phone,
   });
 }
+
+const User user1 =
+    User(name: '홍길동', email: 'hong@example.com', phone: '010-1234-5678');

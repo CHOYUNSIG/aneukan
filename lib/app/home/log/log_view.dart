@@ -1,9 +1,9 @@
 import 'package:aneukan/app/home/log/log_list.dart';
 import 'package:aneukan/app/home/log/date_selector.dart';
 import 'package:aneukan/app/home/log/cam_selector.dart';
-import 'package:aneukan/models/log.dart';
+import 'package:aneukan/data/models/log.dart';
 import 'package:flutter/material.dart';
-import 'package:aneukan/models/homecam.dart';
+import 'package:aneukan/data/models/homecam.dart';
 import 'package:aneukan/previewer.dart';
 
 class LogView extends StatefulWidget {
@@ -59,11 +59,7 @@ void main() {
   runApp(
     Previewer(
       page: LogView(
-        logs: [
-          Log(id: 1, timestamp: DateTime.parse('2024-01-01T16:03:20')),
-          Log(id: 2, timestamp: DateTime.parse('2024-03-02T21:16:05')),
-          Log(id: 3, timestamp: DateTime.parse('2024-06-13T08:42:15')),
-        ],
+        logs: [log1, log2, log3],
         selectedCam: null,
         selectedDateRange: null,
         onCamBarClicked: (cam) {},
