@@ -1,5 +1,9 @@
 import 'homecam.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'log.g.dart';
+
+@JsonSerializable()
 class Log {
   final int id;
   final Homecam homecam;
@@ -10,6 +14,9 @@ class Log {
     required this.homecam,
     required this.timestamp,
   });
+
+  factory Log.fromJson(Map<String, dynamic> json) => _$LogFromJson(json);
+  Map<String, dynamic> toJson() => _$LogToJson(this);
 }
 
 final Log log1 = Log(

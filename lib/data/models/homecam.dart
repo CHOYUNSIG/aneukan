@@ -1,3 +1,8 @@
+import 'package:json_annotation/json_annotation.dart';
+
+part 'homecam.g.dart';
+
+@JsonSerializable()
 class Homecam {
   final int id;
   final String name;
@@ -12,6 +17,10 @@ class Homecam {
     this.address,
     this.email,
   });
+
+  factory Homecam.fromJson(Map<String, dynamic> json) =>
+      _$HomecamFromJson(json);
+  Map<String, dynamic> toJson() => _$HomecamToJson(this);
 }
 
 const Homecam homecam1 = Homecam(

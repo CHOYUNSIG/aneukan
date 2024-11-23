@@ -188,7 +188,10 @@ void main() {
       isView: false,
       page: HomePage(
         logs: [log1, log2, log3],
-        selectedDateRange: null,
+        selectedDateRange: DateTimeRange(
+          start: DateTime.now().subtract(const Duration(days: 2)),
+          end: DateTime.now(),
+        ),
         user: user1,
         selectedCam: homecam1,
         homecams: const [homecam1, homecam2],
