@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
 
 class FormViewer extends StatelessWidget {
+  final String id;
+  final String password;
+
+  final void Function(String id) onIdChanged;
+  final void Function(String password) onPasswordChanged;
+
   final void Function() onLoginButtonClicked;
   final void Function() onRegisterButtonClicked;
 
   const FormViewer({
     super.key,
+    required this.id,
+    required this.password,
+    required this.onIdChanged,
+    required this.onPasswordChanged,
     required this.onLoginButtonClicked,
     required this.onRegisterButtonClicked,
   });
@@ -28,16 +38,16 @@ class FormViewer extends StatelessWidget {
           const SizedBox(height: 24),
           TextFormField(
             decoration: const InputDecoration(
-              labelText: '이메일',
+              labelText: '아이디',
               border: OutlineInputBorder(),
             ),
-            keyboardType: TextInputType.emailAddress,
             validator: (value) {
               if (value == null || value.isEmpty) {
-                return '이메일을 입력해주세요';
+                return '아이디를 입력해주세요';
               }
               return null;
             },
+            onChanged: onIdChanged,
           ),
           const SizedBox(height: 16),
           TextFormField(
@@ -52,6 +62,7 @@ class FormViewer extends StatelessWidget {
               }
               return null;
             },
+            onChanged: onPasswordChanged,
           ),
           const SizedBox(height: 24),
           Row(

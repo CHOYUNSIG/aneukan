@@ -11,32 +11,26 @@ class LocalPreferences {
 
   LocalPreferences(this._prefs);
 
-  // 로그인 상태 저장
   Future<void> setIsLoggedIn(bool isLoggedIn) async {
     await _prefs.setBool(PreferencesKeys.isLoggedIn, isLoggedIn);
   }
 
-  // 로그인 상태 조회
   bool getIsLoggedIn() {
     return _prefs.getBool(PreferencesKeys.isLoggedIn) ?? false;
   }
 
-  // 유저 아이디 저장
-  Future<void> setUserId(String userId) async {
-    await _prefs.setString(PreferencesKeys.userId, userId);
+  Future<void> setUserId(int userId) async {
+    await _prefs.setInt(PreferencesKeys.userId, userId);
   }
 
-  // 유저 아이디 조회
-  String getUserId() {
-    return _prefs.getString(PreferencesKeys.userId) ?? '';
+  int getUserId() {
+    return _prefs.getInt(PreferencesKeys.userId) ?? 0;
   }
 
-  // 유저 토큰 저장
   Future<void> setUserToken(String userToken) async {
     await _prefs.setString(PreferencesKeys.userToken, userToken);
   }
 
-  // 유저 토큰 조회
   String getUserToken() {
     return _prefs.getString(PreferencesKeys.userToken) ?? '';
   }

@@ -7,7 +7,6 @@ import 'home_notifier.dart';
 import 'log/log_view.dart';
 import 'settings/settings_view.dart';
 import 'package:aneukan/previewer.dart';
-import 'package:aneukan/theme.dart';
 
 class HomeApp extends StatelessWidget {
   const HomeApp({super.key});
@@ -16,29 +15,26 @@ class HomeApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (context) => HomeNotifier(),
-      child: MaterialApp(
-        theme: AneukanTheme.theme,
-        home: Consumer<HomeNotifier>(
-          builder: (context, notifier, child) => HomePage(
-            logs: notifier.logs,
-            selectedDateRange: notifier.selectedDateRange,
-            user: notifier.user,
-            selectedCam: notifier.selectedCam,
-            homecams: notifier.homecams,
-            isPushNotificationEnabled: notifier.isPushNotificationEnabled,
-            isMessageNotificationEnabled: notifier.isMessageNotificationEnabled,
-            isEmailNotificationEnabled: notifier.isEmailNotificationEnabled,
-            onEditProfileTapped: notifier.editProfile,
-            onPushNotificationChanged: notifier.setPushNotification,
-            onMessageNotificationChanged: notifier.setMessageNotification,
-            onEmailNotificationChanged: notifier.setEmailNotification,
-            onLogTapped: notifier.onLogTapped,
-            onDateRangeChanged: notifier.onDateRangeChanged,
-            onHomecamTapped: notifier.onHomecamTapped,
-            onDeleteHomecamTapped: notifier.onDeleteHomecamTapped,
-            onAddHomecamTapped: notifier.onAddHomecamTapped,
-            onCamBarClicked: notifier.onCamBarClicked,
-          ),
+      child: Consumer<HomeNotifier>(
+        builder: (context, notifier, child) => HomePage(
+          logs: notifier.logs,
+          selectedDateRange: notifier.selectedDateRange,
+          user: notifier.user,
+          selectedCam: notifier.selectedCam,
+          homecams: notifier.homecams,
+          isPushNotificationEnabled: notifier.isPushNotificationEnabled,
+          isMessageNotificationEnabled: notifier.isMessageNotificationEnabled,
+          isEmailNotificationEnabled: notifier.isEmailNotificationEnabled,
+          onEditProfileTapped: notifier.editProfile,
+          onPushNotificationChanged: notifier.setPushNotification,
+          onMessageNotificationChanged: notifier.setMessageNotification,
+          onEmailNotificationChanged: notifier.setEmailNotification,
+          onLogTapped: notifier.onLogTapped,
+          onDateRangeChanged: notifier.onDateRangeChanged,
+          onHomecamTapped: notifier.onHomecamTapped,
+          onDeleteHomecamTapped: notifier.onDeleteHomecamTapped,
+          onCamBarClicked: notifier.onCamBarClicked,
+          onAddHomecamTapped: () => notifier.onAddHomecamTapped(() => context),
         ),
       ),
     );
@@ -93,58 +89,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _selectedIndex = 0;
-  Widget? _page;
-
-  void _navigateToLogView() {
-    setState(() {
-      _page = LogView(
-        logs: widget.logs,
-        selectedCam: widget.selectedCam,
-        selectedDateRange: widget.selectedDateRange,
-        onLogTapped: widget.onLogTapped,
-        onDateRangeChanged: widget.onDateRangeChanged,
-        onCamBarClicked: (cam) {},
-      );
-    });
-  }
-
-  void _navigateToSettingsView() {
-    setState(() {
-      _page = SettingsView(
-        user: widget.user,
-        homecams: widget.homecams,
-        isPushNotificationEnabled: widget.isPushNotificationEnabled,
-        isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
-        isEmailNotificationEnabled: widget.isEmailNotificationEnabled,
-        onEditProfileTapped: widget.onEditProfileTapped,
-        onPushNotificationChanged: widget.onPushNotificationChanged,
-        onMessageNotificationChanged: widget.onMessageNotificationChanged,
-        onEmailNotificationChanged: widget.onEmailNotificationChanged,
-        onHomecamTapped: widget.onHomecamTapped,
-        onDeleteHomecamTapped: widget.onDeleteHomecamTapped,
-        onAddHomecamTapped: widget.onAddHomecamTapped,
-      );
-    });
-  }
-
-  void _onNavBarItemClicked(int index) {
-    setState(() {
-      _selectedIndex = index;
-      switch (index) {
-        case 0:
-          _navigateToLogView();
-        case 1:
-          _navigateToSettingsView();
-      }
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _navigateToLogView();
-  }
+  int _navBarIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +97,31 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('홈'),
       ),
-      body: _page,
+      body: switch (_navBarIndex) {
+        0 => LogView(
+            logs: widget.logs,
+            selectedCam: widget.selectedCam,
+            selectedDateRange: widget.selectedDateRange,
+            onLogTapped: widget.onLogTapped,
+            onDateRangeChanged: widget.onDateRangeChanged,
+            onCamBarClicked: (cam) {},
+          ),
+        1 => SettingsView(
+            user: widget.user,
+            homecams: widget.homecams,
+            isPushNotificationEnabled: widget.isPushNotificationEnabled,
+            isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
+            isEmailNotificationEnabled: widget.isEmailNotificationEnabled,
+            onEditProfileTapped: widget.onEditProfileTapped,
+            onPushNotificationChanged: widget.onPushNotificationChanged,
+            onMessageNotificationChanged: widget.onMessageNotificationChanged,
+            onEmailNotificationChanged: widget.onEmailNotificationChanged,
+            onHomecamTapped: widget.onHomecamTapped,
+            onDeleteHomecamTapped: widget.onDeleteHomecamTapped,
+            onAddHomecamTapped: widget.onAddHomecamTapped,
+          ),
+        _ => const SizedBox(),
+      },
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -173,8 +142,8 @@ class _HomePageState extends State<HomePage> {
                 label: '설정',
               ),
             ],
-            currentIndex: _selectedIndex,
-            onTap: _onNavBarItemClicked,
+            currentIndex: _navBarIndex,
+            onTap: (index) => setState(() => _navBarIndex = index),
           ),
         ],
       ),
