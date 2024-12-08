@@ -5,11 +5,13 @@ class DateSelector extends StatelessWidget {
   final DateTimeRange? selectedDateRange;
 
   final void Function(DateTimeRange?) onDateRangeChanged;
+  final void Function() onResetButtonClicked;
 
   const DateSelector({
     super.key,
     required this.selectedDateRange,
     required this.onDateRangeChanged,
+    required this.onResetButtonClicked,
   });
 
   Future<void> _showDateRangePicker(BuildContext context) async {
@@ -36,6 +38,12 @@ class DateSelector extends StatelessWidget {
               : '날짜 범위 선택',
         ),
         onTap: () => _showDateRangePicker(context),
+        trailing: selectedDateRange != null
+            ? IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: onResetButtonClicked,
+              )
+            : null,
       ),
     );
   }

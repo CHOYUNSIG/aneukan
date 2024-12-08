@@ -19,6 +19,7 @@ class UserInfoViewer extends StatelessWidget {
       children: [
         Card(
           child: ListTile(
+            onTap: onEditProfileTapped,
             leading: const CircleAvatar(
               child: Icon(Icons.person),
             ),

@@ -5,14 +5,12 @@ class HomecamList extends StatelessWidget {
   final List<Homecam> homecams;
 
   final void Function(Homecam) onHomecamTapped;
-  final void Function(Homecam) onDeleteHomecamTapped;
   final void Function() onAddHomecamTapped;
 
   const HomecamList({
     super.key,
     required this.homecams,
     required this.onHomecamTapped,
-    required this.onDeleteHomecamTapped,
     required this.onAddHomecamTapped,
   });
 
@@ -74,7 +72,7 @@ class HomecamList extends StatelessWidget {
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.edit),
-                          onPressed: () => onDeleteHomecamTapped(homecam),
+                          onPressed: () => onHomecamTapped(homecam),
                         ),
                         onTap: () => onHomecamTapped(homecam),
                       ),

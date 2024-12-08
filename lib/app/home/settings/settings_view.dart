@@ -18,7 +18,6 @@ class SettingsView extends StatefulWidget {
   final void Function(bool) onMessageNotificationChanged;
   final void Function(bool) onEmailNotificationChanged;
   final void Function(Homecam) onHomecamTapped;
-  final void Function(Homecam) onDeleteHomecamTapped;
   final void Function() onAddHomecamTapped;
   final void Function() onLogoutTapped;
 
@@ -34,7 +33,6 @@ class SettingsView extends StatefulWidget {
     required this.onMessageNotificationChanged,
     required this.onEmailNotificationChanged,
     required this.onHomecamTapped,
-    required this.onDeleteHomecamTapped,
     required this.onAddHomecamTapped,
     required this.onLogoutTapped,
   });
@@ -71,7 +69,6 @@ class _SettingsViewState extends State<SettingsView> {
           HomecamList(
             homecams: widget.homecams,
             onHomecamTapped: widget.onHomecamTapped,
-            onDeleteHomecamTapped: widget.onDeleteHomecamTapped,
             onAddHomecamTapped: widget.onAddHomecamTapped,
           ),
         ],
@@ -94,7 +91,6 @@ void main() {
         onMessageNotificationChanged: (value) {},
         onEmailNotificationChanged: (value) {},
         onHomecamTapped: (homecam) {},
-        onDeleteHomecamTapped: (homecam) {},
         onAddHomecamTapped: () {},
         onLogoutTapped: () {},
       ),

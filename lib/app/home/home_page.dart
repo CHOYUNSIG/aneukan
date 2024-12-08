@@ -32,10 +32,12 @@ class HomeApp extends StatelessWidget {
           onLogTapped: notifier.onLogTapped,
           onDateRangeChanged: notifier.onDateRangeChanged,
           onHomecamTapped: notifier.onHomecamTapped,
-          onDeleteHomecamTapped: notifier.onDeleteHomecamTapped,
           onCamBarClicked: () => notifier.onCamBarClicked(() => context),
           onAddHomecamTapped: () => notifier.onAddHomecamTapped(() => context),
           onLogoutTapped: () => notifier.logout(() => context),
+          onCamResetButtonClicked: () =>
+              notifier.onSelectedHomecamChanged(null),
+          onDateResetButtonClicked: () => notifier.onDateRangeChanged(null),
         ),
       ),
     );
@@ -57,12 +59,14 @@ class HomePage extends StatefulWidget {
   final void Function(bool) onMessageNotificationChanged;
   final void Function(bool) onEmailNotificationChanged;
   final void Function(Homecam) onHomecamTapped;
-  final void Function(Homecam) onDeleteHomecamTapped;
   final void Function() onAddHomecamTapped;
   final void Function() onCamBarClicked;
   final void Function(Log) onLogTapped;
   final void Function(DateTimeRange?) onDateRangeChanged;
   final void Function() onLogoutTapped;
+  final void Function() onCamResetButtonClicked;
+  final void Function() onDateResetButtonClicked;
+
   const HomePage({
     super.key,
     required this.logs,
@@ -81,9 +85,10 @@ class HomePage extends StatefulWidget {
     required this.onMessageNotificationChanged,
     required this.onEmailNotificationChanged,
     required this.onHomecamTapped,
-    required this.onDeleteHomecamTapped,
     required this.onAddHomecamTapped,
     required this.onLogoutTapped,
+    required this.onCamResetButtonClicked,
+    required this.onDateResetButtonClicked,
   });
 
   @override
@@ -107,6 +112,8 @@ class _HomePageState extends State<HomePage> {
             onLogTapped: widget.onLogTapped,
             onDateRangeChanged: widget.onDateRangeChanged,
             onCamBarClicked: widget.onCamBarClicked,
+            onCamResetButtonClicked: widget.onCamResetButtonClicked,
+            onDateResetButtonClicked: widget.onDateResetButtonClicked,
           ),
         1 => SettingsView(
             user: widget.user,
@@ -119,7 +126,6 @@ class _HomePageState extends State<HomePage> {
             onMessageNotificationChanged: widget.onMessageNotificationChanged,
             onEmailNotificationChanged: widget.onEmailNotificationChanged,
             onHomecamTapped: widget.onHomecamTapped,
-            onDeleteHomecamTapped: widget.onDeleteHomecamTapped,
             onAddHomecamTapped: widget.onAddHomecamTapped,
             onLogoutTapped: widget.onLogoutTapped,
           ),
@@ -177,10 +183,11 @@ void main() {
         onLogTapped: (log) {},
         onDateRangeChanged: (dateRange) {},
         onHomecamTapped: (homecam) {},
-        onDeleteHomecamTapped: (homecam) {},
         onAddHomecamTapped: () {},
         onCamBarClicked: () {},
         onLogoutTapped: () {},
+        onCamResetButtonClicked: () {},
+        onDateResetButtonClicked: () {},
       ),
     ),
   );

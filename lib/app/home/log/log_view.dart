@@ -14,6 +14,8 @@ class LogView extends StatefulWidget {
   final void Function() onCamBarClicked;
   final void Function(Log) onLogTapped;
   final void Function(DateTimeRange?) onDateRangeChanged;
+  final void Function() onCamResetButtonClicked;
+  final void Function() onDateResetButtonClicked;
 
   const LogView({
     super.key,
@@ -23,6 +25,8 @@ class LogView extends StatefulWidget {
     required this.onCamBarClicked,
     required this.onLogTapped,
     required this.onDateRangeChanged,
+    required this.onCamResetButtonClicked,
+    required this.onDateResetButtonClicked,
   });
 
   @override
@@ -39,10 +43,12 @@ class _LogViewState extends State<LogView> {
           CamSelector(
             selectedCam: widget.selectedCam,
             onCamBarClicked: widget.onCamBarClicked,
+            onResetButtonClicked: widget.onCamResetButtonClicked,
           ),
           DateSelector(
             selectedDateRange: widget.selectedDateRange,
             onDateRangeChanged: widget.onDateRangeChanged,
+            onResetButtonClicked: widget.onDateResetButtonClicked,
           ),
           const SizedBox(height: 16),
           LogList(
@@ -65,6 +71,8 @@ void main() {
         onCamBarClicked: () {},
         onLogTapped: (log) {},
         onDateRangeChanged: (dateRange) {},
+        onCamResetButtonClicked: () {},
+        onDateResetButtonClicked: () {},
       ),
     ),
   );

@@ -56,22 +56,27 @@ class HomeNotifier extends ChangeNotifier {
   }
 
   void setPushNotification(bool value) {
-    isPushNotificationEnabled = value;
+    // isPushNotificationEnabled = value;
     notifyListeners();
   }
 
   void setMessageNotification(bool value) {
-    isMessageNotificationEnabled = value;
+    // isMessageNotificationEnabled = value;
     notifyListeners();
   }
 
   void setEmailNotification(bool value) {
-    isEmailNotificationEnabled = value;
+    // isEmailNotificationEnabled = value;
     notifyListeners();
   }
 
   void onLogTapped(Log log) {
     // TODO: 로그 탭 로직 구현
+    notifyListeners();
+  }
+
+  void onSelectedHomecamChanged(Homecam? homecam) {
+    selectedCam = homecam;
     notifyListeners();
   }
 
@@ -82,11 +87,6 @@ class HomeNotifier extends ChangeNotifier {
 
   void onHomecamTapped(Homecam homecam) {
     // TODO: 홈캠 선택 로직 구현
-    notifyListeners();
-  }
-
-  void onDeleteHomecamTapped(Homecam homecam) {
-    // TODO: 홈캠 삭제 로직 구현
     notifyListeners();
   }
 

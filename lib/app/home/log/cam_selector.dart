@@ -5,11 +5,13 @@ class CamSelector extends StatelessWidget {
   final Homecam? selectedCam;
 
   final void Function() onCamBarClicked;
+  final void Function() onResetButtonClicked;
 
   const CamSelector({
     super.key,
     required this.selectedCam,
     required this.onCamBarClicked,
+    required this.onResetButtonClicked,
   });
 
   @override
@@ -26,6 +28,12 @@ class CamSelector extends StatelessWidget {
               )
             : const Text('홈캠 선택'),
         onTap: onCamBarClicked,
+        trailing: selectedCam != null
+            ? IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: onResetButtonClicked,
+              )
+            : null,
       ),
     );
   }
