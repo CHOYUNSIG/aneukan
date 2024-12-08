@@ -8,12 +8,14 @@ part of 'log.dart';
 
 Log _$LogFromJson(Map<String, dynamic> json) => Log(
       id: (json['id'] as num).toInt(),
-      homecam: Homecam.fromJson(json['homecam'] as Map<String, dynamic>),
+      homecamId: (json['homecamId'] as num).toInt(),
+      videoUrl: json['videoUrl'] as String,
       timestamp: DateTime.parse(json['timestamp'] as String),
     );
 
 Map<String, dynamic> _$LogToJson(Log instance) => <String, dynamic>{
       'id': instance.id,
-      'homecam': instance.homecam,
+      'homecamId': instance.homecamId,
+      'videoUrl': instance.videoUrl,
       'timestamp': instance.timestamp.toIso8601String(),
     };

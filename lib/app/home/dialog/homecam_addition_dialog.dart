@@ -53,7 +53,7 @@ class _HomecamAdditionDialogState extends State<HomecamAdditionDialog> {
               SizedBox(width: 8),
               Expanded(
                 child: Text(
-                  '홈캠 추가 요청을 보내면 홈캠 추가 승인 대기 상태가 됩니다.',
+                  '홈캠 추가 요청을 보내면 홈캠 접근 승인 대기 상태가 됩니다.',
                   style: TextStyle(fontSize: 12),
                   softWrap: true,
                 ),

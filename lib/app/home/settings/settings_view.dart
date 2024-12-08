@@ -20,6 +20,7 @@ class SettingsView extends StatefulWidget {
   final void Function(Homecam) onHomecamTapped;
   final void Function(Homecam) onDeleteHomecamTapped;
   final void Function() onAddHomecamTapped;
+  final void Function() onLogoutTapped;
 
   const SettingsView({
     super.key,
@@ -35,6 +36,7 @@ class SettingsView extends StatefulWidget {
     required this.onHomecamTapped,
     required this.onDeleteHomecamTapped,
     required this.onAddHomecamTapped,
+    required this.onLogoutTapped,
   });
 
   @override
@@ -47,12 +49,14 @@ class _SettingsViewState extends State<SettingsView> {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.user != null)
             UserInfoViewer(
               user: widget.user!,
               onEditProfileTapped: widget.onEditProfileTapped,
+              onLogoutTapped: widget.onLogoutTapped,
             ),
           const SizedBox(height: 24),
           NotificationSwitch(
@@ -92,6 +96,7 @@ void main() {
         onHomecamTapped: (homecam) {},
         onDeleteHomecamTapped: (homecam) {},
         onAddHomecamTapped: () {},
+        onLogoutTapped: () {},
       ),
     ),
   );

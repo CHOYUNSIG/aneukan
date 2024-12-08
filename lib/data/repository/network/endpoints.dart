@@ -1,9 +1,7 @@
 enum Endpoint {
-  getUserInfo,
+  getMyInfo,
   getHomecamList,
-  getHomecamDetail,
   getLog,
-  getLogDetail,
   getLogin,
 
   postRegister,
@@ -13,23 +11,19 @@ enum Endpoint {
 extension EndpointExtension on Endpoint {
   String get path {
     switch (this) {
-      case Endpoint.getUserInfo:
-        return 'user/info';
+      case Endpoint.getMyInfo:
+        return 'user/';
       case Endpoint.getHomecamList:
-        return 'homecam/list';
-      case Endpoint.getHomecamDetail:
-        return 'homecam/detail';
+        return 'homecam/useraccess';
       case Endpoint.getLog:
-        return 'log';
-      case Endpoint.getLogDetail:
-        return 'log/detail';
+        return 'video/list';
       case Endpoint.getLogin:
         return 'user/login';
 
       case Endpoint.postRegister:
         return 'user/';
       case Endpoint.postHomecamAccessPermissionRequest:
-        return 'homecam/accesshomecam';
+        return 'homecam/access';
     }
   }
 }

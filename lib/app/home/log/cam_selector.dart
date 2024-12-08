@@ -4,7 +4,7 @@ import 'package:aneukan/data/models/homecam.dart';
 class CamSelector extends StatelessWidget {
   final Homecam? selectedCam;
 
-  final void Function(Homecam) onCamBarClicked;
+  final void Function() onCamBarClicked;
 
   const CamSelector({
     super.key,
@@ -21,27 +21,11 @@ class CamSelector extends StatelessWidget {
             ? Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(selectedCam!.name),
-                  if (selectedCam!.telephone != null)
-                    Text(
-                      selectedCam!.telephone!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  if (selectedCam!.address != null)
-                    Text(
-                      selectedCam!.address!,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey,
-                      ),
-                    ),
+                  Text(selectedCam!.serialNumber.toString()),
                 ],
               )
             : const Text('홈캠 선택'),
-        onTap: () => onCamBarClicked(selectedCam!),
+        onTap: onCamBarClicked,
       ),
     );
   }

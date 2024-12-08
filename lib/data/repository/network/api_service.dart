@@ -1,27 +1,16 @@
 import 'package:aneukan/data/models/homecam.dart';
+import 'package:aneukan/data/models/log.dart';
 import 'package:aneukan/data/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
-
+import 'package:aneukan/data/repository/network/dto/user_dto.dart';
+import 'package:aneukan/data/repository/network/dto/homecam_dto.dart';
+import 'package:aneukan/data/repository/network/dto/log_dto.dart';
 import 'endpoints.dart';
 
 class ApiService {
   final String baseUrl = dotenv.env['API_BASE_URL'] ?? '';
-
-  Future<T> _get<T>(String endpoint) async {
-    try {
-      final response = await http.get(Uri.parse('$baseUrl/$endpoint'));
-
-      if (response.statusCode == 200) {
-        return jsonDecode(response.body);
-      } else {
-        throw Exception('데이터 로딩 실패');
-      }
-    } catch (e) {
-      throw Exception('네트워크 에러: $e');
-    }
-  }
 
   Future<int> login(String id, String password) async {
     try {
@@ -46,15 +35,17 @@ class ApiService {
   Future<int> register(
       String id, String password, String name, String phone) async {
     try {
+      final request = {
+        'identifier': id,
+        'password': password,
+        'name': name,
+        'phone_num': phone
+      };
+
       final response = await http.post(
         Uri.parse('$baseUrl/${Endpoint.postRegister.path}'),
         headers: {'Content-Type': 'application/json'},
-        body: jsonEncode({
-          'identifier': id,
-          'password': password,
-          'name': name,
-          'phone_num': phone
-        }),
+        body: jsonEncode(request),
         encoding: Encoding.getByName('utf-8'),
       );
 
@@ -68,25 +59,88 @@ class ApiService {
     }
   }
 
-  Future<User> getUserInfo() async {
-    return _get<User>(Endpoint.getUserInfo.path);
-  }
-
-  Future<List<Homecam>> getHomecamList() async {
-    return _get<List<Homecam>>(Endpoint.getHomecamList.path);
-  }
-
-  Future<Homecam> getHomecamDetail(int homecamId) async {
-    final url = '${Endpoint.getHomecamDetail.path}/$homecamId';
-    return _get<Homecam>(url);
-  }
-
-  Future<void> postHomecamAccessPermissionRequest(String serialNumber) async {
+  Future<User> getMyInfo(int key) async {
     try {
+      final response = await http
+          .get(Uri.parse('$baseUrl/${Endpoint.getMyInfo.path}?id=$key'));
+
+      if (response.statusCode == 200) {
+        final dto = UserDto.fromJson(jsonDecode(response.body));
+        return User(
+          id: dto.id,
+          name: dto.name,
+          userId: dto.userId,
+          phone: dto.phoneNumber,
+        );
+      } else {
+        throw Exception('데이터 로딩 실패');
+      }
+    } catch (e) {
+      throw Exception('네트워크 에러: $e');
+    }
+  }
+
+  Future<List<Homecam>> getHomecamList(int key) async {
+    try {
+      final response = await http.get(
+          Uri.parse('$baseUrl/${Endpoint.getHomecamList.path}?userid=$key'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonList = jsonDecode(response.body);
+        final dtos = jsonList.map((dto) => HomecamDto.fromJson(dto)).toList();
+        return dtos
+            .map((dto) => Homecam(
+                id: dto.id,
+                userId: dto.userId,
+                serialNumber: dto.serialNumber,
+                isAccessable: dto.isAccessable))
+            .toList();
+      } else {
+        throw Exception('데이터 로딩 실패');
+      }
+    } catch (e) {
+      throw Exception('네트워크 에러: $e');
+    }
+  }
+
+  Future<List<Log>> getLogList(int homecamId) async {
+    try {
+      final response = await http.get(
+          Uri.parse('$baseUrl/${Endpoint.getLog.path}?homecamid=$homecamId'));
+
+      if (response.statusCode == 200) {
+        final List<dynamic> jsonList = jsonDecode(response.body);
+        final dtos = jsonList.map((dto) => LogDto.fromJson(dto)).toList();
+        return dtos
+            .map((dto) => Log(
+                id: dto.id,
+                homecamId: dto.homecamId,
+                videoUrl: dto.videoUrl,
+                timestamp: dto.timestamp))
+            .toList();
+      } else {
+        throw Exception('데이터 로딩 실패');
+      }
+    } catch (e) {
+      throw Exception('네트워크 에러: $e');
+    }
+  }
+
+  Future<void> postHomecamAccessPermissionRequest(
+      int id, String serialNumber) async {
+    try {
+      final request = {
+        'userid': id,
+        'userhomecam': serialNumber,
+        'access': true,
+      };
+
       final response = await http.post(
         Uri.parse(
-            '$baseUrl/${Endpoint.postHomecamAccessPermissionRequest.path}?serialnum=$serialNumber'),
+            '$baseUrl/${Endpoint.postHomecamAccessPermissionRequest.path}'),
         headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(request),
+        encoding: Encoding.getByName('utf-8'),
       );
 
       if (response.statusCode == 200) {

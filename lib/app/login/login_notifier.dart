@@ -24,7 +24,7 @@ class LoginNotifier extends ChangeNotifier {
   void login(BuildContext Function() getContext) {
     getIt<ApiService>().login(id, password).then((value) {
       final preferences = getIt<LocalPreferences>();
-      preferences.setUserId(value);
+      preferences.setUserKey(value);
       preferences.setIsLoggedIn(true);
 
       Navigator.of(getContext()).pushReplacement(

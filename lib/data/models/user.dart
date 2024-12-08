@@ -4,13 +4,15 @@ part 'user.g.dart';
 
 @JsonSerializable()
 class User {
+  final int id;
   final String name;
-  final String email;
+  final String userId;
   final String phone;
 
   const User({
+    required this.id,
     required this.name,
-    required this.email,
+    required this.userId,
     required this.phone,
   });
 
@@ -19,4 +21,4 @@ class User {
 }
 
 const User user1 =
-    User(name: '홍길동', email: 'hong@example.com', phone: '010-1234-5678');
+    User(id: 1, name: '홍길동', userId: 'hongari', phone: '010-1234-5678');

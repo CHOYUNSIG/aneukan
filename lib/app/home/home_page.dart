@@ -33,8 +33,9 @@ class HomeApp extends StatelessWidget {
           onDateRangeChanged: notifier.onDateRangeChanged,
           onHomecamTapped: notifier.onHomecamTapped,
           onDeleteHomecamTapped: notifier.onDeleteHomecamTapped,
-          onCamBarClicked: notifier.onCamBarClicked,
+          onCamBarClicked: () => notifier.onCamBarClicked(() => context),
           onAddHomecamTapped: () => notifier.onAddHomecamTapped(() => context),
+          onLogoutTapped: () => notifier.logout(() => context),
         ),
       ),
     );
@@ -58,10 +59,10 @@ class HomePage extends StatefulWidget {
   final void Function(Homecam) onHomecamTapped;
   final void Function(Homecam) onDeleteHomecamTapped;
   final void Function() onAddHomecamTapped;
-  final void Function(Homecam) onCamBarClicked;
+  final void Function() onCamBarClicked;
   final void Function(Log) onLogTapped;
   final void Function(DateTimeRange?) onDateRangeChanged;
-
+  final void Function() onLogoutTapped;
   const HomePage({
     super.key,
     required this.logs,
@@ -82,6 +83,7 @@ class HomePage extends StatefulWidget {
     required this.onHomecamTapped,
     required this.onDeleteHomecamTapped,
     required this.onAddHomecamTapped,
+    required this.onLogoutTapped,
   });
 
   @override
@@ -104,7 +106,7 @@ class _HomePageState extends State<HomePage> {
             selectedDateRange: widget.selectedDateRange,
             onLogTapped: widget.onLogTapped,
             onDateRangeChanged: widget.onDateRangeChanged,
-            onCamBarClicked: (cam) {},
+            onCamBarClicked: widget.onCamBarClicked,
           ),
         1 => SettingsView(
             user: widget.user,
@@ -119,6 +121,7 @@ class _HomePageState extends State<HomePage> {
             onHomecamTapped: widget.onHomecamTapped,
             onDeleteHomecamTapped: widget.onDeleteHomecamTapped,
             onAddHomecamTapped: widget.onAddHomecamTapped,
+            onLogoutTapped: widget.onLogoutTapped,
           ),
         _ => const SizedBox(),
       },
@@ -176,7 +179,8 @@ void main() {
         onHomecamTapped: (homecam) {},
         onDeleteHomecamTapped: (homecam) {},
         onAddHomecamTapped: () {},
-        onCamBarClicked: (homecam) {},
+        onCamBarClicked: () {},
+        onLogoutTapped: () {},
       ),
     ),
   );

@@ -11,7 +11,7 @@ class LogView extends StatefulWidget {
   final Homecam? selectedCam;
   final DateTimeRange? selectedDateRange;
 
-  final void Function(Homecam) onCamBarClicked;
+  final void Function() onCamBarClicked;
   final void Function(Log) onLogTapped;
   final void Function(DateTimeRange?) onDateRangeChanged;
 
@@ -62,7 +62,7 @@ void main() {
         logs: [log1, log2, log3],
         selectedCam: null,
         selectedDateRange: null,
-        onCamBarClicked: (cam) {},
+        onCamBarClicked: () {},
         onLogTapped: (log) {},
         onDateRangeChanged: (dateRange) {},
       ),

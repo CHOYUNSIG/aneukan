@@ -8,16 +8,14 @@ part of 'homecam.dart';
 
 Homecam _$HomecamFromJson(Map<String, dynamic> json) => Homecam(
       id: (json['id'] as num).toInt(),
-      name: json['name'] as String,
-      telephone: json['telephone'] as String?,
-      address: json['address'] as String?,
-      email: json['email'] as String?,
+      userId: (json['userId'] as num).toInt(),
+      serialNumber: json['serialNumber'] as String,
+      isAccessable: json['isAccessable'] as bool,
     );
 
 Map<String, dynamic> _$HomecamToJson(Homecam instance) => <String, dynamic>{
       'id': instance.id,
-      'name': instance.name,
-      'telephone': instance.telephone,
-      'address': instance.address,
-      'email': instance.email,
+      'userId': instance.userId,
+      'serialNumber': instance.serialNumber,
+      'isAccessable': instance.isAccessable,
     };
