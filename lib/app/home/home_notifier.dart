@@ -5,6 +5,7 @@ import 'package:aneukan/data/models/user.dart';
 import 'package:aneukan/app/login/login_page.dart';
 import 'package:aneukan/app/home/dialog/homecam_addition_dialog.dart';
 import 'package:aneukan/app/home/dialog/homecam_selection_dialog.dart';
+import 'package:aneukan/app/home/dialog/video_player_dialog.dart';
 import 'package:aneukan/data/repository/network/api_service.dart';
 import 'package:aneukan/data/repository/local/local_preferences.dart';
 import 'package:get_it/get_it.dart';
@@ -34,9 +35,11 @@ class HomeNotifier extends ChangeNotifier {
 
       for (final homecam in homecams) {
         try {
-          api.getLogList(homecam.id).then((value) {
-            logs.addAll(value);
-            notifyListeners();
+          api.getHomecamIdFromSerialNumber(homecam.serialNumber).then((id) {
+            api.getLogList(id).then((value) {
+              logs.addAll(value);
+              notifyListeners();
+            });
           });
         } catch (e) {
           // TODO: 로그 로딩 실패 처리
@@ -48,6 +51,19 @@ class HomeNotifier extends ChangeNotifier {
       user = value;
       notifyListeners();
     });
+  }
+
+  List<Log> getLogs() {
+    final homecamId = selectedCam?.id;
+    final dateRange = selectedDateRange;
+
+    return logs
+        .where((log) =>
+            (homecamId == null || log.homecamId == homecamId) &&
+            (dateRange == null ||
+                (dateRange.start.isBefore(log.timestamp) &&
+                    dateRange.end.isAfter(log.timestamp))))
+        .toList();
   }
 
   void editProfile() {
@@ -70,8 +86,11 @@ class HomeNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onLogTapped(Log log) {
-    // TODO: 로그 탭 로직 구현
+  void onLogTapped(Log log, BuildContext Function() getContext) {
+    showDialog(
+      context: getContext(),
+      builder: (context) => VideoPlayerDialog(videoId: log.id),
+    );
     notifyListeners();
   }
 
@@ -81,7 +100,14 @@ class HomeNotifier extends ChangeNotifier {
   }
 
   void onDateRangeChanged(DateTimeRange? dateRange) {
-    selectedDateRange = dateRange;
+    if (dateRange == null) {
+      selectedDateRange = null;
+    } else {
+      selectedDateRange = DateTimeRange(
+        start: dateRange.start,
+        end: dateRange.end.add(const Duration(days: 1)),
+      );
+    }
     notifyListeners();
   }
 

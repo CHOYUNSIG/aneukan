@@ -17,7 +17,7 @@ class HomeApp extends StatelessWidget {
       create: (context) => HomeNotifier(),
       child: Consumer<HomeNotifier>(
         builder: (context, notifier, child) => HomePage(
-          logs: notifier.logs,
+          logs: notifier.getLogs(),
           selectedDateRange: notifier.selectedDateRange,
           user: notifier.user,
           selectedCam: notifier.selectedCam,
@@ -29,7 +29,7 @@ class HomeApp extends StatelessWidget {
           onPushNotificationChanged: notifier.setPushNotification,
           onMessageNotificationChanged: notifier.setMessageNotification,
           onEmailNotificationChanged: notifier.setEmailNotification,
-          onLogTapped: notifier.onLogTapped,
+          onLogTapped: (log) => notifier.onLogTapped(log, () => context),
           onDateRangeChanged: notifier.onDateRangeChanged,
           onHomecamTapped: notifier.onHomecamTapped,
           onCamBarClicked: () => notifier.onCamBarClicked(() => context),

@@ -7,6 +7,7 @@ import 'dart:convert';
 import 'package:aneukan/data/repository/network/dto/user_dto.dart';
 import 'package:aneukan/data/repository/network/dto/homecam_dto.dart';
 import 'package:aneukan/data/repository/network/dto/log_dto.dart';
+import 'package:aneukan/data/repository/network/dto/homecam_detail_dto.dart';
 import 'endpoints.dart';
 
 class ApiService {
@@ -118,6 +119,22 @@ class ApiService {
                 videoUrl: dto.videoUrl,
                 timestamp: dto.timestamp))
             .toList();
+      } else {
+        throw Exception('데이터 로딩 실패');
+      }
+    } catch (e) {
+      throw Exception('네트워크 에러: $e');
+    }
+  }
+
+  Future<int> getHomecamIdFromSerialNumber(String serialNumber) async {
+    try {
+      final response = await http.get(Uri.parse(
+          '$baseUrl/${Endpoint.getHomecamIdFromSerialNumber.path}?serialnum=$serialNumber'));
+
+      if (response.statusCode == 200) {
+        final dto = HomecamDetailDto.fromJson(jsonDecode(response.body));
+        return dto.id;
       } else {
         throw Exception('데이터 로딩 실패');
       }

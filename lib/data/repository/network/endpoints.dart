@@ -3,6 +3,7 @@ enum Endpoint {
   getHomecamList,
   getLog,
   getLogin,
+  getHomecamIdFromSerialNumber,
 
   postRegister,
   postHomecamAccessPermissionRequest,
@@ -19,6 +20,8 @@ extension EndpointExtension on Endpoint {
         return 'video/list';
       case Endpoint.getLogin:
         return 'user/login';
+      case Endpoint.getHomecamIdFromSerialNumber:
+        return 'homecam/';
 
       case Endpoint.postRegister:
         return 'user/';
