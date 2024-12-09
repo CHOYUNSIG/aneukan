@@ -6,18 +6,21 @@ part 'homecam_detail_dto.g.dart';
 class HomecamDetailDto {
   @JsonKey(name: 'id')
   final int id;
+
   @JsonKey(name: 'userid')
-  final int userId;
+  final int accessorId;
+
   @JsonKey(name: 'serialnum')
   final String serialNumber;
+
   @JsonKey(name: 'nickname')
-  final String name;
+  final String accessorName;
 
   const HomecamDetailDto({
     required this.id,
-    required this.userId,
+    required this.accessorId,
     required this.serialNumber,
-    required this.name,
+    required this.accessorName,
   });
 
   factory HomecamDetailDto.fromJson(Map<String, dynamic> json) =>

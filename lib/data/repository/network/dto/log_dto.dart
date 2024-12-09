@@ -6,10 +6,13 @@ part 'log_dto.g.dart';
 class LogDto {
   @JsonKey(name: 'id')
   final int id;
+
   @JsonKey(name: 'homecamid')
   final int homecamId;
+
   @JsonKey(name: 'videourl')
   final String videoUrl;
+
   @JsonKey(name: 'savetime')
   final DateTime timestamp;
 

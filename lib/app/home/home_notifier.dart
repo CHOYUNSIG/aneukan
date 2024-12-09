@@ -3,6 +3,7 @@ import 'package:aneukan/data/models/log.dart';
 import 'package:aneukan/data/models/homecam.dart';
 import 'package:aneukan/data/models/user.dart';
 import 'package:aneukan/app/login/login_page.dart';
+import 'package:aneukan/data/models/access_info.dart';
 import 'package:aneukan/app/home/dialog/homecam_addition_dialog.dart';
 import 'package:aneukan/app/home/dialog/homecam_selection_dialog.dart';
 import 'package:aneukan/app/home/dialog/video_player_dialog.dart';
@@ -15,6 +16,7 @@ final getIt = GetIt.instance;
 class HomeNotifier extends ChangeNotifier {
   User? user;
   List<Homecam> homecams = [];
+  List<AccessInfo> accessInfos = [];
 
   List<Log> logs = [];
   DateTimeRange? selectedDateRange;
@@ -29,20 +31,35 @@ class HomeNotifier extends ChangeNotifier {
     final api = getIt<ApiService>();
     final key = preferences.getUserKey();
 
-    api.getHomecamList(key).then((value) {
-      homecams = value;
+    api.getHomecamAccessList(key).then((accessInfos) {
+      this.accessInfos = accessInfos;
       notifyListeners();
 
-      for (final homecam in homecams) {
-        try {
-          api.getHomecamIdFromSerialNumber(homecam.serialNumber).then((id) {
-            api.getLogList(id).then((value) {
-              logs.addAll(value);
+      for (final accessInfo in accessInfos) {
+        if (accessInfo.isAccessable) {
+          try {
+            api
+                .getHomecamIdFromSerialNumber(accessInfo.homecamSerialNumber)
+                .then((id) {
+              api.getLogList(id).then((value) {
+                logs.addAll(value);
+                notifyListeners();
+              });
+            });
+          } catch (e) {
+            // TODO: 로그 로딩 실패 처리
+          }
+
+          try {
+            api
+                .getHomecamDetail(accessInfo.homecamSerialNumber)
+                .then((homecam) {
+              homecams.add(homecam);
               notifyListeners();
             });
-          });
-        } catch (e) {
-          // TODO: 로그 로딩 실패 처리
+          } catch (e) {
+            // TODO: 홈캠 로딩 실패 처리
+          }
         }
       }
     });
@@ -62,7 +79,9 @@ class HomeNotifier extends ChangeNotifier {
             (homecamId == null || log.homecamId == homecamId) &&
             (dateRange == null ||
                 (dateRange.start.isBefore(log.timestamp) &&
-                    dateRange.end.isAfter(log.timestamp))))
+                    dateRange.end
+                        .add(const Duration(days: 1))
+                        .isAfter(log.timestamp))))
         .toList();
   }
 
@@ -100,18 +119,11 @@ class HomeNotifier extends ChangeNotifier {
   }
 
   void onDateRangeChanged(DateTimeRange? dateRange) {
-    if (dateRange == null) {
-      selectedDateRange = null;
-    } else {
-      selectedDateRange = DateTimeRange(
-        start: dateRange.start,
-        end: dateRange.end.add(const Duration(days: 1)),
-      );
-    }
+    selectedDateRange = dateRange;
     notifyListeners();
   }
 
-  void onHomecamTapped(Homecam homecam) {
+  void onHomecamTapped(AccessInfo accessInfo) {
     // TODO: 홈캠 선택 로직 구현
     notifyListeners();
   }
@@ -130,8 +142,8 @@ class HomeNotifier extends ChangeNotifier {
               .catchError((error) => onError())
               .then((_) {
             Navigator.of(getContext()).pop();
-            api.getHomecamList(key).then((value) {
-              homecams = value;
+            api.getHomecamAccessList(key).then((value) {
+              accessInfos = value;
               notifyListeners();
             });
           });

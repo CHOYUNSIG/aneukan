@@ -1,3 +1,4 @@
+import 'package:aneukan/data/models/access_info.dart';
 import 'package:aneukan/data/models/homecam.dart';
 import 'package:aneukan/data/models/log.dart';
 import 'package:aneukan/data/models/user.dart';
@@ -5,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'package:aneukan/data/repository/network/dto/user_dto.dart';
-import 'package:aneukan/data/repository/network/dto/homecam_dto.dart';
+import 'package:aneukan/data/repository/network/dto/homecam_access_dto.dart';
 import 'package:aneukan/data/repository/network/dto/log_dto.dart';
 import 'package:aneukan/data/repository/network/dto/homecam_detail_dto.dart';
 import 'endpoints.dart';
@@ -69,9 +70,9 @@ class ApiService {
         final dto = UserDto.fromJson(jsonDecode(response.body));
         return User(
           id: dto.id,
-          name: dto.name,
-          userId: dto.userId,
-          phone: dto.phoneNumber,
+          name: dto.accessorName,
+          userId: dto.accessorId,
+          phone: dto.accessorPhoneNumber,
         );
       } else {
         throw Exception('데이터 로딩 실패');
@@ -81,21 +82,40 @@ class ApiService {
     }
   }
 
-  Future<List<Homecam>> getHomecamList(int key) async {
+  Future<List<AccessInfo>> getHomecamAccessList(int key) async {
     try {
-      final response = await http.get(
-          Uri.parse('$baseUrl/${Endpoint.getHomecamList.path}?userid=$key'));
+      final response = await http.get(Uri.parse(
+          '$baseUrl/${Endpoint.getHomecamAccessList.path}?userid=$key'));
 
       if (response.statusCode == 200) {
         final List<dynamic> jsonList = jsonDecode(response.body);
-        final dtos = jsonList.map((dto) => HomecamDto.fromJson(dto)).toList();
+        final dtos =
+            jsonList.map((dto) => HomecamAccessDto.fromJson(dto)).toList();
         return dtos
-            .map((dto) => Homecam(
-                id: dto.id,
-                userId: dto.userId,
-                serialNumber: dto.serialNumber,
+            .map((dto) => AccessInfo(
+                accessorId: dto.accessorId,
+                homecamSerialNumber: dto.serialNumber,
                 isAccessable: dto.isAccessable))
             .toList();
+      } else {
+        throw Exception('데이터 로딩 실패');
+      }
+    } catch (e) {
+      throw Exception('네트워크 에러: $e');
+    }
+  }
+
+  Future<Homecam> getHomecamDetail(String serialNumber) async {
+    try {
+      final response = await http.get(Uri.parse(
+          '$baseUrl/${Endpoint.getHomecamDetail.path}?serialnum=$serialNumber'));
+
+      if (response.statusCode == 200) {
+        final dto = HomecamDetailDto.fromJson(jsonDecode(response.body));
+        return Homecam(
+          id: dto.id,
+          serialNumber: dto.serialNumber,
+        );
       } else {
         throw Exception('데이터 로딩 실패');
       }

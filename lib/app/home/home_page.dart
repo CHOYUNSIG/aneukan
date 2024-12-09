@@ -1,6 +1,7 @@
-import 'package:aneukan/data/models/homecam.dart';
+import 'package:aneukan/data/models/access_info.dart';
 import 'package:aneukan/data/models/log.dart';
 import 'package:aneukan/data/models/user.dart';
+import 'package:aneukan/data/models/homecam.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'home_notifier.dart';
@@ -21,7 +22,7 @@ class HomeApp extends StatelessWidget {
           selectedDateRange: notifier.selectedDateRange,
           user: notifier.user,
           selectedCam: notifier.selectedCam,
-          homecams: notifier.homecams,
+          accessInfos: notifier.accessInfos,
           isPushNotificationEnabled: notifier.isPushNotificationEnabled,
           isMessageNotificationEnabled: notifier.isMessageNotificationEnabled,
           isEmailNotificationEnabled: notifier.isEmailNotificationEnabled,
@@ -49,7 +50,7 @@ class HomePage extends StatefulWidget {
   final DateTimeRange? selectedDateRange;
   final User? user;
   final Homecam? selectedCam;
-  final List<Homecam> homecams;
+  final List<AccessInfo> accessInfos;
   final bool isPushNotificationEnabled;
   final bool isMessageNotificationEnabled;
   final bool isEmailNotificationEnabled;
@@ -58,7 +59,7 @@ class HomePage extends StatefulWidget {
   final void Function(bool) onPushNotificationChanged;
   final void Function(bool) onMessageNotificationChanged;
   final void Function(bool) onEmailNotificationChanged;
-  final void Function(Homecam) onHomecamTapped;
+  final void Function(AccessInfo) onHomecamTapped;
   final void Function() onAddHomecamTapped;
   final void Function() onCamBarClicked;
   final void Function(Log) onLogTapped;
@@ -76,7 +77,7 @@ class HomePage extends StatefulWidget {
     required this.onLogTapped,
     required this.onDateRangeChanged,
     required this.user,
-    required this.homecams,
+    required this.accessInfos,
     required this.isPushNotificationEnabled,
     required this.isMessageNotificationEnabled,
     required this.isEmailNotificationEnabled,
@@ -117,7 +118,7 @@ class _HomePageState extends State<HomePage> {
           ),
         1 => SettingsView(
             user: widget.user,
-            homecams: widget.homecams,
+            accessInfos: widget.accessInfos,
             isPushNotificationEnabled: widget.isPushNotificationEnabled,
             isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
             isEmailNotificationEnabled: widget.isEmailNotificationEnabled,
@@ -172,7 +173,7 @@ void main() {
         ),
         user: user1,
         selectedCam: homecam1,
-        homecams: const [homecam1, homecam2],
+        accessInfos: const [accessInfo1, accessInfo2],
         isPushNotificationEnabled: true,
         isMessageNotificationEnabled: false,
         isEmailNotificationEnabled: true,

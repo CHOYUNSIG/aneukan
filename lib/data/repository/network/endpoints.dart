@@ -1,7 +1,8 @@
 enum Endpoint {
   getMyInfo,
-  getHomecamList,
+  getHomecamAccessList,
   getLog,
+  getHomecamDetail,
   getLogin,
   getHomecamIdFromSerialNumber,
 
@@ -14,8 +15,10 @@ extension EndpointExtension on Endpoint {
     switch (this) {
       case Endpoint.getMyInfo:
         return 'user/';
-      case Endpoint.getHomecamList:
+      case Endpoint.getHomecamAccessList:
         return 'homecam/useraccess';
+      case Endpoint.getHomecamDetail:
+        return 'homecam/';
       case Endpoint.getLog:
         return 'video/list';
       case Endpoint.getLogin:

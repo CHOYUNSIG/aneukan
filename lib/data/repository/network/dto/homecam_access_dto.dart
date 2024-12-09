@@ -1,14 +1,14 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'homecam_dto.g.dart';
+part 'homecam_access_dto.g.dart';
 
 @JsonSerializable()
-class HomecamDto {
+class HomecamAccessDto {
   @JsonKey(name: 'id')
   final int id;
 
   @JsonKey(name: 'userid')
-  final int userId;
+  final int accessorId;
 
   @JsonKey(name: 'userhomecam')
   final String serialNumber;
@@ -16,14 +16,14 @@ class HomecamDto {
   @JsonKey(name: 'access')
   final bool isAccessable;
 
-  const HomecamDto({
+  const HomecamAccessDto({
     required this.id,
-    required this.userId,
+    required this.accessorId,
     required this.serialNumber,
     required this.isAccessable,
   });
 
-  factory HomecamDto.fromJson(Map<String, dynamic> json) =>
-      _$HomecamDtoFromJson(json);
-  Map<String, dynamic> toJson() => _$HomecamDtoToJson(this);
+  factory HomecamAccessDto.fromJson(Map<String, dynamic> json) =>
+      _$HomecamAccessDtoFromJson(json);
+  Map<String, dynamic> toJson() => _$HomecamAccessDtoToJson(this);
 }

@@ -6,18 +6,21 @@ part 'user_dto.g.dart';
 class UserDto {
   @JsonKey(name: 'id')
   final int id;
+
   @JsonKey(name: 'identifier')
-  final String userId;
+  final String accessorId;
+
   @JsonKey(name: 'name')
-  final String name;
+  final String accessorName;
+
   @JsonKey(name: 'phone_num')
-  final String phoneNumber;
+  final String accessorPhoneNumber;
 
   const UserDto({
     required this.id,
-    required this.userId,
-    required this.name,
-    required this.phoneNumber,
+    required this.accessorId,
+    required this.accessorName,
+    required this.accessorPhoneNumber,
   });
 
   factory UserDto.fromJson(Map<String, dynamic> json) =>

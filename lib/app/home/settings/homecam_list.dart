@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:aneukan/data/models/homecam.dart';
+import 'package:aneukan/data/models/access_info.dart';
 
 class HomecamList extends StatelessWidget {
-  final List<Homecam> homecams;
+  final List<AccessInfo> accessInfos;
 
-  final void Function(Homecam) onHomecamTapped;
+  final void Function(AccessInfo) onHomecamTapped;
   final void Function() onAddHomecamTapped;
 
   const HomecamList({
     super.key,
-    required this.homecams,
+    required this.accessInfos,
     required this.onHomecamTapped,
     required this.onAddHomecamTapped,
   });
@@ -39,7 +39,7 @@ class HomecamList extends StatelessWidget {
           const SizedBox(height: 8),
 
           // 홈캠 리스트
-          homecams.isEmpty
+          accessInfos.isEmpty
               ? const Center(
                   child: Padding(
                     padding: EdgeInsets.all(16.0),
@@ -53,28 +53,28 @@ class HomecamList extends StatelessWidget {
                 )
               : ListView.builder(
                   shrinkWrap: true,
-                  itemCount: homecams.length,
+                  itemCount: accessInfos.length,
                   itemBuilder: (context, index) {
-                    final homecam = homecams[index];
+                    final accessInfo = accessInfos[index];
                     return Card(
                       margin: const EdgeInsets.only(bottom: 8),
                       child: ListTile(
                         leading: const Icon(Icons.home),
-                        title: Text(homecam.serialNumber),
+                        title: Text(accessInfo.homecamSerialNumber),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              homecam.isAccessable ? '접근 허용됨' : '접근 허용 대기중',
+                              accessInfo.isAccessable ? '접근 허용됨' : '접근 허용 대기중',
                               style: const TextStyle(fontSize: 12),
                             ),
                           ],
                         ),
                         trailing: IconButton(
                           icon: const Icon(Icons.edit),
-                          onPressed: () => onHomecamTapped(homecam),
+                          onPressed: () => onHomecamTapped(accessInfo),
                         ),
-                        onTap: () => onHomecamTapped(homecam),
+                        onTap: () => onHomecamTapped(accessInfo),
                       ),
                     );
                   },

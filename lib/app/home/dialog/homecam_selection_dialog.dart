@@ -21,12 +21,9 @@ class HomecamSelectionDialog extends StatefulWidget {
 class _HomecamSelectionDialogState extends State<HomecamSelectionDialog> {
   @override
   Widget build(BuildContext context) {
-    final accessedHomecams =
-        widget.homecams.where((homecam) => homecam.isAccessable).toList();
-
     return AlertDialog(
       title: const Text('홈캠 선택'),
-      content: accessedHomecams.isEmpty
+      content: widget.homecams.isEmpty
           ? const Center(
               child: Padding(
                 padding: EdgeInsets.all(16.0),
@@ -40,7 +37,7 @@ class _HomecamSelectionDialogState extends State<HomecamSelectionDialog> {
             )
           : SingleChildScrollView(
               child: Column(
-                children: accessedHomecams
+                children: widget.homecams
                     .map((homecam) => Card(
                           margin: const EdgeInsets.only(bottom: 8),
                           child: ListTile(

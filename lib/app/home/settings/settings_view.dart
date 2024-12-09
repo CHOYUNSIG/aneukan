@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:aneukan/data/models/homecam.dart';
+import 'package:aneukan/data/models/access_info.dart';
 import 'package:aneukan/app/home/settings/user_info_viewer.dart';
 import 'package:aneukan/app/home/settings/notification_switch.dart';
 import 'package:aneukan/app/home/settings/homecam_list.dart';
@@ -8,7 +8,7 @@ import 'package:aneukan/previewer.dart';
 
 class SettingsView extends StatefulWidget {
   final User? user;
-  final List<Homecam> homecams;
+  final List<AccessInfo> accessInfos;
   final bool isPushNotificationEnabled;
   final bool isMessageNotificationEnabled;
   final bool isEmailNotificationEnabled;
@@ -17,14 +17,14 @@ class SettingsView extends StatefulWidget {
   final void Function(bool) onPushNotificationChanged;
   final void Function(bool) onMessageNotificationChanged;
   final void Function(bool) onEmailNotificationChanged;
-  final void Function(Homecam) onHomecamTapped;
+  final void Function(AccessInfo) onHomecamTapped;
   final void Function() onAddHomecamTapped;
   final void Function() onLogoutTapped;
 
   const SettingsView({
     super.key,
     required this.user,
-    required this.homecams,
+    required this.accessInfos,
     required this.isPushNotificationEnabled,
     required this.isMessageNotificationEnabled,
     required this.isEmailNotificationEnabled,
@@ -67,7 +67,7 @@ class _SettingsViewState extends State<SettingsView> {
           ),
           const SizedBox(height: 24),
           HomecamList(
-            homecams: widget.homecams,
+            accessInfos: widget.accessInfos,
             onHomecamTapped: widget.onHomecamTapped,
             onAddHomecamTapped: widget.onAddHomecamTapped,
           ),
@@ -82,7 +82,7 @@ void main() {
     Previewer(
       page: SettingsView(
         user: user1,
-        homecams: const [homecam1, homecam2],
+        accessInfos: const [accessInfo1, accessInfo2],
         isPushNotificationEnabled: true,
         isMessageNotificationEnabled: false,
         isEmailNotificationEnabled: true,
