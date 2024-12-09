@@ -39,6 +39,7 @@ class HomeApp extends StatelessWidget {
           onCamResetButtonClicked: () =>
               notifier.onSelectedHomecamChanged(null),
           onDateResetButtonClicked: () => notifier.onDateRangeChanged(null),
+          onRefresh: () => notifier.refresh(),
         ),
       ),
     );
@@ -67,6 +68,7 @@ class HomePage extends StatefulWidget {
   final void Function() onLogoutTapped;
   final void Function() onCamResetButtonClicked;
   final void Function() onDateResetButtonClicked;
+  final Future<void> Function() onRefresh;
 
   const HomePage({
     super.key,
@@ -90,6 +92,7 @@ class HomePage extends StatefulWidget {
     required this.onLogoutTapped,
     required this.onCamResetButtonClicked,
     required this.onDateResetButtonClicked,
+    required this.onRefresh,
   });
 
   @override
@@ -105,33 +108,38 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: const Text('홈'),
       ),
-      body: switch (_navBarIndex) {
-        0 => LogView(
-            logs: widget.logs,
-            selectedCam: widget.selectedCam,
-            selectedDateRange: widget.selectedDateRange,
-            onLogTapped: widget.onLogTapped,
-            onDateRangeChanged: widget.onDateRangeChanged,
-            onCamBarClicked: widget.onCamBarClicked,
-            onCamResetButtonClicked: widget.onCamResetButtonClicked,
-            onDateResetButtonClicked: widget.onDateResetButtonClicked,
-          ),
-        1 => SettingsView(
-            user: widget.user,
-            accessInfos: widget.accessInfos,
-            isPushNotificationEnabled: widget.isPushNotificationEnabled,
-            isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
-            isEmailNotificationEnabled: widget.isEmailNotificationEnabled,
-            onEditProfileTapped: widget.onEditProfileTapped,
-            onPushNotificationChanged: widget.onPushNotificationChanged,
-            onMessageNotificationChanged: widget.onMessageNotificationChanged,
-            onEmailNotificationChanged: widget.onEmailNotificationChanged,
-            onHomecamTapped: widget.onHomecamTapped,
-            onAddHomecamTapped: widget.onAddHomecamTapped,
-            onLogoutTapped: widget.onLogoutTapped,
-          ),
-        _ => const SizedBox(),
-      },
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await widget.onRefresh();
+        },
+        child: switch (_navBarIndex) {
+          0 => LogView(
+              logs: widget.logs,
+              selectedCam: widget.selectedCam,
+              selectedDateRange: widget.selectedDateRange,
+              onLogTapped: widget.onLogTapped,
+              onDateRangeChanged: widget.onDateRangeChanged,
+              onCamBarClicked: widget.onCamBarClicked,
+              onCamResetButtonClicked: widget.onCamResetButtonClicked,
+              onDateResetButtonClicked: widget.onDateResetButtonClicked,
+            ),
+          1 => SettingsView(
+              user: widget.user,
+              accessInfos: widget.accessInfos,
+              isPushNotificationEnabled: widget.isPushNotificationEnabled,
+              isMessageNotificationEnabled: widget.isMessageNotificationEnabled,
+              isEmailNotificationEnabled: widget.isEmailNotificationEnabled,
+              onEditProfileTapped: widget.onEditProfileTapped,
+              onPushNotificationChanged: widget.onPushNotificationChanged,
+              onMessageNotificationChanged: widget.onMessageNotificationChanged,
+              onEmailNotificationChanged: widget.onEmailNotificationChanged,
+              onHomecamTapped: widget.onHomecamTapped,
+              onAddHomecamTapped: widget.onAddHomecamTapped,
+              onLogoutTapped: widget.onLogoutTapped,
+            ),
+          _ => const SizedBox(),
+        },
+      ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -189,6 +197,7 @@ void main() {
         onLogoutTapped: () {},
         onCamResetButtonClicked: () {},
         onDateResetButtonClicked: () {},
+        onRefresh: () async {},
       ),
     ),
   );

@@ -27,6 +27,10 @@ class HomeNotifier extends ChangeNotifier {
   bool isEmailNotificationEnabled = false;
 
   HomeNotifier() {
+    refresh();
+  }
+
+  Future<void> refresh() async {
     final preferences = getIt<LocalPreferences>();
     final api = getIt<ApiService>();
     final key = preferences.getUserKey();
