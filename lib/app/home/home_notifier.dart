@@ -17,8 +17,8 @@ class HomeNotifier extends ChangeNotifier {
   User? user;
   List<Homecam> homecams = [];
   List<AccessInfo> accessInfos = [];
-
   List<Log> logs = [];
+
   DateTimeRange? selectedDateRange;
   Homecam? selectedCam;
 
@@ -31,6 +31,12 @@ class HomeNotifier extends ChangeNotifier {
   }
 
   Future<void> refresh() async {
+    user = null;
+    homecams = [];
+    accessInfos = [];
+    logs = [];
+    notifyListeners();
+
     final preferences = getIt<LocalPreferences>();
     final api = getIt<ApiService>();
     final key = preferences.getUserKey();
