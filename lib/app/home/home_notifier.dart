@@ -42,7 +42,8 @@ class HomeNotifier extends ChangeNotifier {
                 .getHomecamIdFromSerialNumber(accessInfo.homecamSerialNumber)
                 .then((id) {
               api.getLogList(id).then((value) {
-                logs.addAll(value);
+                logs = value.toList()
+                  ..sort((a, b) => b.timestamp.compareTo(a.timestamp));
                 notifyListeners();
               });
             });
