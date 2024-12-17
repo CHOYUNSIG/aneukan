@@ -22,7 +22,7 @@
   <img src="https://github.com/user-attachments/assets/4c080ca6-99bd-468f-8711-4539811f909e" width=30% />
 </div>
 <h3>홈캠 등록</h3>
-<blockquote>낙상 알림을 구독하고 기록을 열람하고 싶은 홈캠의 시리얼 번호를 알아내어 등록합니다.</blockquote>
+<blockquote>아늑한 서비스의 모든 홈캠에는 각기 다른 시리얼 번호가 부여되어 있습니다. 낙상 알림을 구독하고 기록을 열람하려면 해당 홈캠에 부여된 시리얼 번호를 알아야 합니다. 시리얼 번호를 알아내었다면, 홈캠 관리 탭에서 시리얼 번호를 통해 홈캠을 등록합니다. 등록 신청이 되었다면 해당 홈캠은 열람 승인 대기 상태가 되며, 열람이 승인될 시 해당 홈캠으로부터 낙상 감지 알림을 수신하고 기록을 열람할 수 있게 됩니다.</blockquote>
 
 <hr/>
 
@@ -39,21 +39,21 @@
   <img src="https://github.com/user-attachments/assets/7180aa8e-f1a7-4f42-a3d6-93edf2b58efc" width=30% />
 </div>
 <h3>낙상 기록과 영상 열람</h3>
-<blockquote>낙상이 발생한 시각과 해당 낙상이 담긴 영상을 열람하여 정확한 상황을 파악할 수 있습니다.</blockquote>
+<blockquote>낙상이 발생한 시각과 해당 낙상이 담긴 영상을 열람하여 정확한 상황을 파악할 수 있습니다. 이를 통해서 사용자는 해당 낙상 상황이 얼마나 심각한지를 판단할 수 있으며, 구조대 신고 등의 조치를 취할 수 있습니다. 또한 이 영상 기록은 낙상 발생의 근거 자료가 될 수 있습니다.</blockquote>
 
-<h1>🥝 기여자</h1>
+<h2>🥝 기여자</h2>
 <div align=center>
   <table>
     <tr>
-      <td colspan=3 align=center>AI</td>
-      <td colspan=2 align=center>Service</td>
+      <td colspan=3 align=center>AI 파트</td>
+      <td colspan=2 align=center>Service 파트</td>
     </tr>
     <tr>
-      <td>공세민</td>
-      <td>기다슬</td>
-      <td>박보현</td>
-      <td>조윤식</td>
-      <td>최석운</td>
+      <td align=center>공세민</td>
+      <td align=center>기다슬</td>
+      <td align=center>박보현</td>
+      <td align=center>조윤식</td>
+      <td align=center>최석운</td>
     </tr>
     <tr>
       <td align=center>
