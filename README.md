@@ -27,7 +27,7 @@
 <hr/>
 
 <div align=center>
-  <img src="https://github.com/user-attachments/assets/6ba4d380-bb88-476b-9605-e234d50ddc2e" width=30% />
+  <img src="https://github.com/user-attachments/assets/6ba4d380-bb88-476b-9605-e234d50ddc2e" width=70% />
 </div>
 <h3>낙상 발생 시 알림과 SMS 수신</h3>
 <blockquote>낙상이 발생하면 SMS와 푸시 알림 등 미리 설정한 방법으로 즉시 연락을 받습니다.</blockquote>
