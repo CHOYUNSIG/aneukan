@@ -57,19 +57,19 @@
     </tr>
     <tr>
       <td align=center>
-        <a href="https://github.com/SeMinKong"><img src="https://avatars.githubusercontent.com/u/154436207?v=4" width="100px"/></a>
+        <a href="https://github.com/SeMinKong"><img src="https://avatars.githubusercontent.com/u/154436207?v=4" width="100px" alt=""/></a>
       </td>
       <td align=center>
-        <a href="https://github.com/gidaseul"><img src="https://avatars.githubusercontent.com/u/61573303?v=4" width="100px"/></a>
+        <a href="https://github.com/gidaseul"><img src="https://avatars.githubusercontent.com/u/61573303?v=4" width="100px" alt=""/></a>
       </td>
       <td align=center>
-        <a href="https://github.com/HIROKIPark"><img src="https://avatars.githubusercontent.com/u/99084610?v=4" width="100px"/></a>
+        <a href="https://github.com/HIROKIPark"><img src="https://avatars.githubusercontent.com/u/99084610?v=4" width="100px" alt=""/></a>
       </td>
       <td align=center>
-        <a href="https://github.com/CHOYUNSIG"><img src="https://avatars.githubusercontent.com/u/61886049?v=4" width="100px"/></a>
+        <a href="https://github.com/CHOYUNSIG"><img src="https://avatars.githubusercontent.com/u/61886049?v=4" width="100px" alt=""/></a>
       </td>
       <td align=center>
-        <a href="https://github.com/choiseokun"><img src="https://avatars.githubusercontent.com/u/66260038?v=4" width="100px"/></a>
+        <a href="https://github.com/Choi-seokun"><img src="https://avatars.githubusercontent.com/u/142799427?v=4" width=100 alt=""/></a>
       </td>
     </tr>
   </table>
